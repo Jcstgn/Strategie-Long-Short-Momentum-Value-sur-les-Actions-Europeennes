@@ -30,7 +30,7 @@ The data for this strategy comes from the `DATA.xlsx` file, which contains:
  - Price-to-Book ratios for each stock.
 
 ## Installation
-1. Unzip the dataset file `DATA.zip` in the main project directory.
+1. Load the dataset file `DATA.xlsx` in the main project directory.
 2. Run the main Jupyter Notebook file to execute the analysis
 
 ## License
