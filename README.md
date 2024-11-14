@@ -1,4 +1,4 @@
-# Long/Short Momentum/Value Strategy on European Stocks
+# Python Project : Long/Short Momentum/Value Strategy on European Stocks
 ## Project Overview
 
 This project aims to replicate a Long/Short Momentum/Value Strategy on European stocks, as described in the provided data and methodology. The strategy combines two well-known factors—momentum and value—to select stocks for long and short positions in the European equity market. 
