@@ -1,27 +1,35 @@
 # Python Project : Long/Short Momentum/Value Strategy on European Stocks
 ## Project Overview
 
-This project aims to replicate a Long/Short Momentum/Value Strategy on European stocks, as described in the provided data and methodology. The strategy combines two well-known factors—momentum and value—to select stocks for long and short positions in the European equity market. 
+This project implements a Long/Short strategy combining two classic factors: Momentum and Value. The goal is to select European stocks for simultaneous long and short portfolios, then compare the strategy’s performance against major stock indices (e.g., S&P 500, CAC 40, DAX).
 
-The strategy is rebalanced monthly and utilizes historical return and Price-to-Book (P/B) ratios for stock selection.
+The strategy is rebalanced monthly, using historical returns and Price-to-Book (P/B) ratios. At each rebalance, a global score is assigned to each stock to determine if it should be bought (long) or sold short (short).
 
 ## Methodology
 The project follows a three-step approach to implement the strategy:
 
-### 1. Stock Scoring
- - **Momentum Score** : Calculated as the centered standard deviation of the average monthly returns over the past 12 months, excluding the most recent month.
+### 1. Data Loading & Cleaning
+- The data (monthly returns, P/B ratios) is sourced from DATA.xlsx.
+- Missing values for certain stocks (e.g., BNP PARIBAS, SOCIETE GENERALE SA) are replaced with zero or other suitable methods.
+- DataFrames are filtered to keep only dates after March 2008.
 
- - **Value Score** : Calculated as the centered standard deviation of the Price-to-Book (P/B) ratio, measured at the end of the previous month.
+### 2. Score Calculation
+ - **Momentum Score**: Based on the standard deviation of a 12-month rolling average of returns, excluding the most recent month.
+ - **Value Score**: Derived from the standard deviation of the P/B ratio (or an inverted P/B if you wish to capture the “value” effect more directly).
+ - **Global Score**: The arithmetic mean of each stock’s Momentum Score and Value Score.
+   
+### 3. Portfolio Formation
+- **Long Portfolio**: The top 15 stocks with the highest Global Scores.
+- **Short Portfolio**: The bottom 15 stocks with the lowest Global Scores.
 
- - **Global Score** : Each stock's global score is the arithmetic mean of its momentum and value scores.
+### 4. Portfolio Construction & Rebalancing
+- Portfolios are weighted proportionally to the absolute values of their Global Scores.
+- Capital is split equally: 50% in long positions and 50% in short positions.
+- Each month, weights are updated (rebalanced), and capital is recalculated based on the monthly returns.
 
-### 2. Portfolio Formation
- - **Long Portfolio**: Composed of the top 15 stocks with the highest global scores.
- - **Short Portfolio**: Composed of the bottom 15 stocks with the lowest global scores.
-
-### 3. Portfolio Construction
-Both the long and short portfolios are weighted proportionally to the absolute values of their respective global scores.
-The strategy invests 100% in both the long and short portfolios.
+### 5. Performance Analysis
+- The net capital is computed as Long Portfolio Capital – Short Portfolio Capital.
+- A cumulative performance chart is generated and compared to major benchmark indices (S&P 500, CAC 40, DAX, etc.) via the yfinance library.
 
 ## Data Source
 The data for this strategy comes from the `DATA.xlsx` file, which contains:
